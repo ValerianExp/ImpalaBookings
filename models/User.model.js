@@ -5,9 +5,11 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      // unique: true -> Ideally, should be unique, but its up to you
+      // unique: true -> Ideally, should be unique, but its up to 
+
     },
     password: String,
+    favorites: [{ type: Schema.Types.ObjectId, ref: 'Hotels' }]
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

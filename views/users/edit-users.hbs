@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Edit</h1>
+  <form action="/users/edit/{{data.id}}" method="POST">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name of customer</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{data.name}}">
+    </div>
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Type of customer</label>
+      <select class="form-select" id="type" name="type">
+
+        {{!-- {{#if type.isCoffeShop}}
+        <option selected value="coffeeshop">Coffe shop</option>
+        <option value="bookstore">Book store</option>
+        {{/if}}
+        {{#if type.isBookStore}}
+        <option value="coffeeshop">Coffe shop</option>
+        <option selected value="bookstore">Book store</option>
+        {{/if}} --}}
+
+
+      </select>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>

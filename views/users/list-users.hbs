@@ -1,0 +1,21 @@
+<div class="container">
+    <h2 class="listText">All users</h2>
+
+
+    <ul>
+        {{#each data}}
+        <ul>
+            <p>{{name}}</p>
+            <p>{{type}}</p>
+            <form action="/users/delete/{{id}}" method="POST">
+                <a href="/users/edit/{{id}}" class="btn btn-warning list-btn">Edit</a>
+                <button type="submit" class="btn btn-danger list-btn">Delete</button>
+            </form>
+            </li>
+        </ul>
+        {{/each}}
+
+    </ul>
+
+    <a href="/users/create" class="btn btn-success list-btn">Add</a>
+</div>
