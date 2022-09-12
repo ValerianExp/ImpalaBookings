@@ -1,2 +1,14 @@
 <h1>{{appTitle}} 🚀</h1>
 <p>Welcome Ironhacker!</p>
+
+
+<p>
+  {{#each hotels}}
+    <a href="/hotels/{{this.hotelId}}">{{this.name}}</a>
+    <br />
+    Emails:
+    {{#each this.emails}}
+      <p>{{this}}</p>
+    {{/each}}
+  {{/each}}
+</p>
