@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const AxiosIH = require('../connect/axios.connect');
+const axiosCharacter = new AxiosIH();
 
 //Axios
 const AxiosImp = require("../connect/axios.connect");
@@ -19,5 +21,18 @@ router.get("/:id", (req, res, next) => {
         .catch((err) => next(err))
     // res.json(axiosImpala.getHotel(id));
 });
+
+
+router.get('/rooms', (req, res, next) => {
+    axiosCharacter
+        .getCharacters()
+        .then((room) => {
+            console.log(room);
+            res.json(room);
+        })
+        .catch((err) => next(err));
+});
+
+
 
 module.exports = router;
