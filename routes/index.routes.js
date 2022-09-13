@@ -16,8 +16,8 @@ router.get("/", (req, res, next) => {
     .getHotels({}) // TODO -> Add query params
     .then((response) => {
       const hotelResp = response.data;
-      res.json(hotelResp);
-      // res.render("index", { hotels: hotelResp.data });
+      // res.json(hotelResp);
+      res.render("index", { hotels: hotelResp.data });
     })
     .catch((err) => {
       next(err);
