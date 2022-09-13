@@ -1,3 +1,11 @@
-<h1>Hello</h1>
-<p>Hellooo</p>
-<p>{{hotelResp}}</p>
+<h1>List of hotels</h1>
+<p>
+  {{#each hotels}}
+    <a href="/hotels/{{this.hotelId}}">{{this.name}}</a>
+    <br />
+    Emails:
+    {{#each this.emails}}
+      <p>{{this}}</p>
+    {{/each}}
+  {{/each}}
+</p>

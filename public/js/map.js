@@ -47,5 +47,14 @@ document.addEventListener(
                 placeHotel(hotel, hotel.location);
             });
         }
+
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: { lat: 40.416775, lng: -3.703790 },
+            });
+
+            geocode(map);
+        }
     }
 );

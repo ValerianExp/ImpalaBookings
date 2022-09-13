@@ -7,7 +7,16 @@ const AxiosImp = require("../connect/axios.connect");
 const axiosImpala = new AxiosImp();
 
 router.get("/", (req, res, next) => {
-    res.render("hotels/");
+    axiosImpala
+        .getHotels({}) // TODO -> Add query params
+        .then((response) => {
+            const hotelResp = response.data;
+            // res.json(hotelResp);
+            res.render("hotels", { hotels: hotelResp.data });
+        })
+        .catch((err) => {
+            next(err);
+        });
 });
 
 router.get("/:id", (req, res, next) => {
