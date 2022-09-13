@@ -53,8 +53,9 @@ document.addEventListener(
                 zoom: 12,
                 center: { lat: 40.416775, lng: -3.703790 },
             });
-
             geocode(map);
         }
+        // initMap;
+
     }
 );
