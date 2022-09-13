@@ -24,4 +24,38 @@ router.get("/", (req, res, next) => {
     });
 });
 
+
+
+/* GET home page */
+router.get('/', (_req, res) => {
+  res.render('index');
+});
+
+// router.get('/signup', (_req, res) => {
+//   res.render('signup');
+// });
+// router.get('/login', (req, res) => {
+//   res.render('login');
+// });
+
+// router.post('/signup', (req, res, next) => {
+//   console.log(req.body);
+//   // const username = req.body.username;
+//   // const email = req.body.email;
+//   // const password = req.body.password;
+//   const { name, email, password, level } = req.body;
+//   console.log({ name, email, password, level });
+//   modelUser.create({ username: name, email, password, level })
+//     .then((user) => {
+//       res.redirect(`/users/${user._id}`);
+//     })
+//     // Utilizamos el next(err) para controlar el error
+//     .catch((err) => {
+//       next(err);
+//     });
+// });
+
+
+
+
 module.exports = router;

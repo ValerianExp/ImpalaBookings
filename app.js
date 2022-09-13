@@ -25,14 +25,21 @@ const projectName = "ImpalaBookings";
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
 // 👇 Start handling routes here
-const index = require("./routes/index.routes");
-app.use("/", index);
 
-const hotels = require("./routes/hotels.routes");
-app.use('/hotels', hotels);
+// const index = require("./routes/index.routes");
+// app.use("/", index);
+// const hotels = require("./routes/hotels.routes");
+// app.use('/hotels', hotels);
+// const users = require("./routes/users.routes");
+// app.use('/users', users);
+// const auth = require('./routes/auth.routes');
+// app.use('/auth', auth);
 
-const users = require("./routes/users.routes");
-app.use('/users', users);
+// Session config
+require('./config/session.config')(app)
+
+// Routes
+require("./routes")(app)
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

@@ -1,21 +1,50 @@
 <div class="container">
-    <h2 class="listText">All users</h2>
+    <h2 class="listText">Users</h2>
 
 
-    <ul>
-        {{#each data}}
-        <ul>
-            <p>{{name}}</p>
-            <p>{{type}}</p>
-            <form action="/users/delete/{{id}}" method="POST">
-                <a href="/users/edit/{{id}}" class="btn btn-warning list-btn">Edit</a>
-                <button type="submit" class="btn btn-danger list-btn">Delete</button>
-            </form>
-            </li>
-        </ul>
-        {{/each}}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Profile picture</th>
+                <th scope="col">Username</th>
+                <th scope="col">Description</th>
+                <th></th>
 
-    </ul>
-
-    <a href="/users/create" class="btn btn-success list-btn">Add</a>
+                {{#if roles.isPM}}
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                {{/if}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td><img src="{{profileImg}}" id="profilePic" alt="Profile picture of {{username}}"> </td>
+                <td>{{username}}</td>
+                <td>{{description}}</td>
+                <td><a href="/users/{{id}}" class="btn btn-primary list-btn">Details</a></td>
+                {{#if ../roles.isPA}}
+                <td><a href="/users/{{id}}/edit" class="btn btn-warning list-btn">Edit</a></td>
+                <td>
+                    <form action="/users/{{id}}/delete" method="POST">
+                        <button type="submit" class="btn btn-danger list-btn">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/users/{{id}}/changeRole/TA" method="POST">
+                        <button type="submit" class="btn btn-info list-btn">Set as PA</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/users/{{id}}/changeRole/COMPANY" method="POST">
+                        <button type="submit" class="btn btn-info list-btn">Set as COMPANY</button>
+                    </form>
+                </td>
+                {{/if}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </div>
