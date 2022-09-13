@@ -10,7 +10,7 @@ module.exports = app => {
 
     // Hotels routes
     const hotelRouter = require("./hotels.routes");
-    app.use("/", hotelRouter);
+    app.use("/hotels", hotelRouter);
 
     //Users routes
     const userRouter = require("./users.routes");

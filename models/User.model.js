@@ -12,6 +12,7 @@ const userSchema = new Schema(
       level: { type: String, enum: ['silver', 'platinum'], default: 'silver' }
     },
 
+
     password: { type: String, required: true, minLength: 8 },
 
     profileImg: { type: String, default: 'https://i.stack.imgur.com/l60Hf.png' },
@@ -23,7 +24,6 @@ const userSchema = new Schema(
       enum: ['USER', 'COMPANY', 'PA', 'CLIENT'],
       default: 'USER'
     },
-
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
