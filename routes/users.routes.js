@@ -1,16 +1,18 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const Hotel = require("../models/hotel.model");
-const checkTypeCustomer = require("../utils/check-type-customer")
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
+
 const checkMongoID = require("../utils/check-mongo-id")
+
+const checkTypeCustomer = require("../utils/check-type-customer")
+
+const { rolesChecker } = require("./../utils/roles-checker")
 
 const { checkRole } = require("./../middleware/roles-checker")
 
 const { isLoggedIn } = require("./../middleware/session-guard")
-
-const { rolesChecker } = require("./../utils/roles-checker")
 
 const { canEditUser } = require("./../middleware/can-edit-user")
 
@@ -30,7 +32,7 @@ router.get('/administ', isLoggedIn, checkRole("PA"), (req, res, next) => {
     console.log("roles:", roles)
     User.find()
         .then(data => {
-            res.render('users/users-list', { data, roles })
+            res.render('users/list-users', { data, roles })
         })
         .catch(err => console.log(err))
 })
@@ -55,7 +57,7 @@ router.get('/users/:id/edit', isLoggedIn, canEditUser(), (req, res, next) => {
     User.findById(req.params.id)
 
         .then(data => res.render('users/users-edit', data))
-        .catch(err => res.redirect(`/users/${req.params.is}/id`, { errorMessage: err }))
+        .catch(err => res.redirect(`/users/${req.params.id}/id`, { errorMessage: err }))
 
 })
 router.post('/users/:id/edit', isLoggedIn, canEditUser(), (req, res, next) => {
@@ -63,7 +65,7 @@ router.post('/users/:id/edit', isLoggedIn, canEditUser(), (req, res, next) => {
 
     User.findByIdAndUpdate(id, req.body)
         .then(() => res.redirect('/users'))
-        .catch(err => res.redirect(`/users/${req.params.is}/id`, { errorMessage: err }))
+        .catch(err => res.redirect(`/users/${req.params.id}/id`, { errorMessage: err }))
 
 
 })

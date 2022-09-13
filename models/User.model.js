@@ -24,6 +24,8 @@ const userSchema = new Schema(
       default: 'USER'
     },
 
+    hotelrewards: { type: Number, rewards: { default: 500 } }
+
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
