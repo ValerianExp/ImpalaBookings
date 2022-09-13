@@ -12,6 +12,7 @@ const userSchema = new Schema(
       level: { type: String, enum: ['silver', 'platinum'], default: 'silver' }
     },
 
+
     password: { type: String, required: true, minLength: 8 },
 
     profileImg: { type: String, default: 'https://i.stack.imgur.com/l60Hf.png' },
