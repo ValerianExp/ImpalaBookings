@@ -77,4 +77,44 @@
   {{/each}}
 {{/if}}
 
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Add to favorites" />
+</form>
+
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Remove from favorites" />
+</form>
+
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Add to blacklist" />
+</form>
+
+{{! Send email }}
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Send email" />
+</form>
+
+{{! Mapas }}
 <div id="map" style="width: 100%; height: 400px"></div>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUeQXCyJDlhOtCB8JwWAk8zCxpjk6k-jo"
+></script>
+
+<script>
+  //TODO : move to a separate file and special js file //window.loquesea = //{{hotel.location.latitude}}
+  //console.log({{hotel.location.latitude}}); console.log({{hotel.location.longitude}});
+  const map = new google.maps.Map(document.getElementById("map"), { zoom: 12,
+  center: { lat:
+  {{hotel.location.latitude}}, lng:
+  {{hotel.location.longitude}}
+  }, }); function createMarker(center, map, title) { new google.maps.Marker({
+  position: center, map: map, title: title }); } createMarker({ lat:
+  {{hotel.location.latitude}}, lng:
+  {{hotel.location.longitude}}
+  }, map, "{{hotel.name}}");
+</script>
+{{! Mapas }}
