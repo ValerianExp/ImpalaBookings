@@ -77,6 +77,27 @@
   {{/each}}
 {{/if}}
 
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Add to favorites" />
+</form>
+
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Remove from favorites" />
+</form>
+
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Add to blacklist" />
+</form>
+
+{{! Send email }}
+<form action="" method="post">
+  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="submit" value="Send email" />
+</form>
+
 {{! Mapas }}
 <div id="map" style="width: 100%; height: 400px"></div>
 <script

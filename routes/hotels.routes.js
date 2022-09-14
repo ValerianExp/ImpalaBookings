@@ -7,6 +7,10 @@ const AxiosImp = require("../connect/axios.connect");
 const axiosImpala = new AxiosImp();
 
 router.get("/", (req, res, next) => {
+    // let a =
+    // {
+    //     'name[like]': 'inclusive',
+    // };
     axiosImpala
         .getHotels({}) // TODO -> Add query params
         .then((response) => {
@@ -31,8 +35,8 @@ router.get("/:id", (req, res, next) => {
     // res.json(axiosImpala.getHotel(id));
 });
 
-
 router.get('/rooms', (req, res, next) => {
+    //TODO getCharacters() ??
     axiosCharacter
         .getCharacters()
         .then((room) => {
@@ -42,6 +46,29 @@ router.get('/rooms', (req, res, next) => {
         .catch((err) => next(err));
 });
 
+router.post('/:id', (req, res, next) => {
+    const { id } = req.params;
+    const { name, description } = req.body;
 
+    //SEND EMAIL
+    const sgMail = require('@sendgrid/mail')
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+    const msg = {
+        to: 'r.pino.camacho@gmail.com', // Change to your recipient
+        from: 'impalabookings@hotmail.com', // Change to your verified sender
+        subject: 'Sending with SendGrid is Fun',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    }
+    sgMail
+        .send(msg)
+        .then(() => {
+            console.log('Email sent')
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    res.redirect('/hotels');
+});
 
 module.exports = router;
