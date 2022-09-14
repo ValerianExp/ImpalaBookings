@@ -10,11 +10,11 @@ const checkTypeCustomer = require("../utils/check-type-customer")
 
 const { rolesChecker } = require("./../utils/roles-checker")
 
-const { checkRole } = require("./../middleware/roles-checker")
+const { checkRole } = require("../middlewARE/roles-checker")
 
-const { isLoggedIn } = require("./../middleware/session-guard")
+const { isLoggedIn } = require("../middlewARE/session-guard")
 
-const { canEditUser } = require("./../middleware/can-edit-user")
+const { canEditUser } = require("../middlewARE/can-edit-user")
 
 
 router.get('/users', isLoggedIn, (req, res, next) => {
