@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const Hotel = require("../models/hotel.model");
-const checkTypeCustomer = require("../utils/check-type-customer")
+// const checkTypeCustomer = require("../utils/check-type-customer")
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
 

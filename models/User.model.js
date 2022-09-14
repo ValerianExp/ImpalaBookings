@@ -24,6 +24,9 @@ const userSchema = new Schema(
       enum: ['USER', 'COMPANY', 'PA', 'CLIENT'],
       default: 'USER'
     },
+
+    hotelrewards: { type: Number, rewards: { default: 500 } }
+
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
