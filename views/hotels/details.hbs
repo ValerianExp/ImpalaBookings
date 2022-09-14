@@ -95,6 +95,20 @@
 {{! Send email }}
 <form action="" method="post">
   <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+  <input type="hidden" name="hotelName" value="{{hotel.hote.name}}" />
+  <input type="hidden" name="hotelCity" value="{{hotel.address.city}}" />
+  <input
+    type="hidden"
+    name="hotelCountry"
+    value="{{hotel.address.countryName}}"
+  />
+  <input
+    type="hidden"
+    name="location"
+    value="{{hotel.address.line1}}, {{hotel.address.postalCode}} {{hotel.address.city}} {{hotel.address.region}} {{hotel.address.countryName}}"
+  />
+  <input type="hidden" name="checkIn" value="{{hotel.checkIn.from}}" />
+  <input type="hidden" name="checkOut" value="{{hotel.checkOut.to}}" />
   <input type="submit" value="Send email" />
 </form>
 

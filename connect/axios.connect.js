@@ -24,12 +24,24 @@ class AxiosImpala {
             // Remove last &
             url = url.slice(0, -1);
         }
-        console.log(url);
+        // console.log(url);
         return this.axios.get(url);
     }
 
     getHotel(id) {
         return this.axios.get(`/hotels/${id}`);
+    }
+
+    getRooms(id) {
+        const rooms = [];
+        return this.getHotel(id)
+            .then((hotel) => {
+                hotel.data.roomTypes.forEach(room => {
+                    rooms.push(room);
+                });
+                return rooms;
+            })
+            .catch((err) => console.log(err));
     }
 }
 
