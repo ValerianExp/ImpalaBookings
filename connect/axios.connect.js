@@ -18,13 +18,13 @@ class AxiosImpala {
         let url = "/hotels";
         if (cont > 0) {
             url += '?';
-            // Add query params
             for (let key in obj) {
                 url += `${key}=${obj[key]}&`;
             }
             // Remove last &
             url = url.slice(0, -1);
         }
+        console.log(url);
         return this.axios.get(url);
     }
 

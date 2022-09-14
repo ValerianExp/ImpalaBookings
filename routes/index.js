@@ -15,4 +15,10 @@ module.exports = app => {
     //Users routes
     const userRouter = require("./users.routes");
     app.use("/", userRouter);
+
+    //Parameters routes
+    const parametersRouter = require("./parameters.routes");
+    app.use("/parametros", parametersRouter);
+
+
 }

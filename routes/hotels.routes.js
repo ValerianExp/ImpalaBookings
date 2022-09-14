@@ -8,10 +8,10 @@ const axiosImpala = new AxiosImp();
 
 router.get("/", (req, res, next) => {
     axiosImpala
-        .getHotels({}) // TODO -> Add query params
+        .getHotels({ 'country[eq]': 'ESP' })
         .then((response) => {
             const hotelResp = response.data;
-            // res.json(hotelResp);
+            res.json(hotelResp);
             res.render("hotels", { hotels: hotelResp.data });
         })
         .catch((err) => {
