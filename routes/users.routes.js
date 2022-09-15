@@ -55,8 +55,7 @@ router.get('/users/:id', isLoggedIn, (req, res, next) => {
 
 router.get('/users/:id/edit', isLoggedIn, canEditUser(), (req, res, next) => {
     User.findById(req.params.id)
-
-        .then(data => res.render('users/users-edit', data))
+        .then(data => res.render('users/edit-users', data))
         .catch(err => res.redirect(`/users/${req.params.id}/id`, { errorMessage: err }))
 
 })

@@ -26,10 +26,10 @@ router.get("/", (req, res, next) => {
 
 
 
-/* GET home page */
-router.get('/', (_req, res) => {
-  res.render('index');
-});
+// /* GET home page */
+// router.get('/', (_req, res) => {
+//   res.render('index');
+// });
 
 // router.get('/signup', (_req, res) => {
 //   res.render('signup');

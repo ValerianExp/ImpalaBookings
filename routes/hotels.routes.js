@@ -70,26 +70,8 @@ router.post('/:id', (req, res, next) => {
         userName: 'NOMBRE_USUARIO',
     }
     const emailT = getTemplate(template);
-    // req.body.email = 'pghhtcmavclgklypes@kvhrw.com';
-    sendEmail('tlyoorzucheqprrver@bvhrs.com', 'Booking confirmation', 'Your booking has been confirmed', emailT);
-    //SEND EMAIL
-    // const sgMail = require('@sendgrid/mail')
-    // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-    // const msg = {
-    //     to: 'r.pino.camacho@gmail.com', // Change to your recipient
-    //     from: 'impalabookings@hotmail.com', // Change to your verified sender
-    //     subject: 'Sending with SendGrid is Fun',
-    //     text: 'and easy to do anywhere, even with Node.js',
-    //     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    // }
-    // sgMail
-    //     .send(msg)
-    //     .then(() => {
-    //         console.log('Email sent')
-    //     })
-    //     .catch((error) => {
-    //         console.error(error)
-    //     })
+    sendEmail('jzxjgrvcceswijbjpq@nvhrw.com', 'Booking confirmation', 'Your booking has been confirmed', emailT);
+
     res.redirect('/hotels');
 });
 

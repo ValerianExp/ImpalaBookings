@@ -20,6 +20,7 @@ router.post('/', (req, res, next) => {
     axiosImpala.getHotels(newObj)
         .then((response) => {
             const reservaResp = response.data;
+            // cuidado no podeís responder dos veces 
             res.json(reservaResp);
             res.render("hotels", { reserva: reservaResp.data });
         })
