@@ -18,7 +18,7 @@ const userSchema = new Schema(
     profileImg: {
       type: String,
       // default: 'https://i.stack.imgur.com/l60Hf.png'
-      default: 'https://i.stack.imgur.com/XeN1BHm.png'
+      default: 'https://i.imgur.com/XeN1BHm.png'
     },
 
     favorites: [{ type: Schema.Types.ObjectId, ref: 'Hotels' }],

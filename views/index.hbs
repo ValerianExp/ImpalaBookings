@@ -1,7 +1,6 @@
 <h1>{{appTitle}} 🚀</h1>
 <p>Welcome Ironhacker!</p>
 
-
 <p>
   {{#each hotels}}
     <a href="/hotels/{{this.hotelId}}">{{this.name}}</a>
@@ -12,3 +11,18 @@
     {{/each}}
   {{/each}}
 </p>
+
+{{#if next}}
+  <form action="/index" method="get">
+    <input type="number" name="next_size" value="{{next.size}}" />
+    <input type="number" name="next_offset" value="{{next.offset}}" />
+    <button type="submit">Next</button>
+  </form>
+{{/if}}
+{{#if prev}}
+  <form action="/prev" method="get">
+    <input type="number" name="next_size" value="{{prev.size}}" />
+    <input type="number" name="next_offset" value="{{prev.offset}}" />
+    <button type="submit">Prev</button>
+  </form>
+{{/if}}

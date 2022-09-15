@@ -65,18 +65,9 @@ router.post('/users/:id/edit', isLoggedIn, canEditUser(), (req, res, next) => {
     User.findByIdAndUpdate(id, req.body)
         .then(() => res.redirect('/users'))
         .catch(err => res.redirect(`/users/${req.params.id}/id`, { errorMessage: err }))
-
-
 })
 
-router.post('/users/:id/delete', checkRole("PA"), (req, res, next) => {
-    const { id } = req.params
-    User.findByIdAndDelete(id)
-        .then(() => res.redirect('/users'))
-        .catch(err => console.log(err))
 
-
-})
 
 router.post('/users/:id/changeRole/:role', isLoggedIn, checkRole("PA"), (req, res, next) => {
     const { id, role } = req.params
@@ -88,7 +79,55 @@ router.post('/users/:id/changeRole/:role', isLoggedIn, checkRole("PA"), (req, re
 
 })
 
+router.post('/users/fav', isLoggedIn, (req, res, next) => {
+    const { hotelId } = req.body
+    const { _id } = req.session.currentUser
 
+    Hotel.findOne({ hotelId })
+        .then(hotel => {
+            if (hotel) {
+                return hotel
+            }
+            else {
+                return Hotel.create({ hotelId });
+            }
+        }).
+        then((hotelMongo) => {
+            User.findByIdAndUpdate(_id, { $addToSet: { favorites: hotelMongo._id } })
+                .then(() => res.redirect('/'))
+                .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+})
+
+router.post('/users/fav/delete', isLoggedIn, (req, res, next) => {
+    const { hotelId } = req.body
+    const { _id } = req.session.currentUser
+
+    Hotel.findOne({ hotelId })
+        .then(hotel => {
+            if (hotel) {
+                return hotel
+            }
+            else {
+                return Hotel.create({ hotelId });
+            }
+        }).
+        then((hotelMongo) => {
+            User.findByIdAndUpdate(_id, { $pull: { favorites: hotelMongo._id } })
+                .then(() => res.redirect('/'))
+                .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+})
+
+
+router.post('/users/:id/delete', checkRole("PA"), (req, res, next) => {
+    const { id } = req.params
+    User.findByIdAndDelete(id)
+        .then(() => res.redirect('/users'))
+        .catch(err => console.log(err))
+})
 module.exports = router
 
 

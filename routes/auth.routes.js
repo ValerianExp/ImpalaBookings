@@ -17,22 +17,16 @@ router.get('/registro', (req, res, next) => {
 
 router.post('/registro', fileUploader.single('profileImg'), (req, res) => {
     const { username, userPwd, email, description } = req.body
-    // console.log('====================================');}
-    // console.log('====================================');
+    console.log('====================================');
+    console.log(req.body);
+    console.log('====================================');
 
     let profileImg;
 
-    if (!req.file) {
-        //Default image
-        profileImg = 'https://i.imgur.com/XeN1BHm.png'
-    } else {
-        // User image
-        profileImg = req.file.path
-    }
     bcrypt
         .genSalt(saltRounds)
         .then(salt => {
-            // convertilo a una función
+            // TODO: convertilo a una función
             if (!/\d/.test(userPwd)) {
                 throw ("password must contain at least one number");
             }

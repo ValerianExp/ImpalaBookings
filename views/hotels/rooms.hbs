@@ -1,0 +1,26 @@
+<h1>Rooms</h1>
+{{#each rooms}}
+  <h2>Price :: {{this.price}}</h2>
+  <h2>{{this.name}}</h2>
+  <p>Description: {{this.description}}</p>
+  <p>Max occupancy: {{this.maxOccupancy}}</p>
+  <h2>Images</h2>
+  <ul>
+    {{#each this.images}}
+      <li>
+        <img src="{{this.url}}" style="width: 4vw;" />
+      </li>
+    {{/each}}
+  </ul>
+  <h2>Amenities</h2>
+  <ul>
+    {{#each this.amenities}}
+      <li>{{this.formatted}}</li>
+    {{/each}}
+  </ul>
+  {{!-- <form action="/hotels/rooms/{{this.roomTypeId}}/book" method="POST">
+    <input type="text" name="price" value="{{this.price}}" hidden />
+    <input type="text" name="name" value="{{this.roomTypeId}}" hidden />
+    <button type="submit">Book</button>
+  </form> --}}
+{{/each}}

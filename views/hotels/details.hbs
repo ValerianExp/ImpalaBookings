@@ -77,12 +77,12 @@
   {{/each}}
 {{/if}}
 
-<form action="" method="post">
+<form action="/users/fav" method="post">
   <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
   <input type="submit" value="Add to favorites" />
 </form>
 
-<form action="" method="post">
+<form action="/users/fav/delete" method="post">
   <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
   <input type="submit" value="Remove from favorites" />
 </form>

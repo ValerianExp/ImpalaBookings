@@ -1,10 +1,9 @@
-const priceRoom = (room) => {
-    const divd = 11;
-    const { amenities } = room;
+const priceRoom = (amenities) => {
+    const divd = Math.random() * (13 - 9) + 9;
     const price = amenities.reduce((acc, amenity) => {
         return acc + amenity.code;
     }, 0);
-    return price / divd;
+    return parseInt(price / divd);
 }
 
 module.exports = priceRoom;
