@@ -8,13 +8,13 @@ module.exports = app => {
     const authRouter = require("./auth.routes");
     app.use("/", authRouter);
 
-    // Hotels routes
-    const hotelRouter = require("./hotels.routes");
-    app.use("/hotels", hotelRouter);
-
     //Users routes
     const userRouter = require("./users.routes");
     app.use("/", userRouter);
+
+    // Hotels routes
+    const hotelRouter = require("./hotels.routes");
+    app.use("/hotels", hotelRouter);
 
     //Parameters routes
     const parametersRouter = require("./parameters.routes");

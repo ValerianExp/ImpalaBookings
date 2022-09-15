@@ -14,6 +14,9 @@ class AxiosImpala {
     }
 
     getHotels(obj) {
+        // console.log('====================================');
+        // console.log(obj);
+        // console.log('====================================');
         let cont = Object.keys(obj).length;
         let url = "/hotels";
         if (cont > 0) {

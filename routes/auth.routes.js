@@ -5,26 +5,39 @@ const Hotel = require("../models/hotel.model");
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
 
-// Signup
-router.get('/registro', (req, res, next) => res.render('auth/signup'))
-router.post('/registro', (req, res, next) => {
+//Uploads image profile 
+const fileUploader = require('../config/cloudinary.config');
 
-    const { userPwd } = req.body
+// Signup
+router.get('/registro', (req, res, next) => {
+    res.render('auth/signup')
+    // res.render('auth/signup');
+})
+
+
+router.post('/registro', fileUploader.single('profileImg'), (req, res) => {
+    const { username, userPwd, email, description } = req.body
+    console.log('====================================');
+    console.log(req.body);
+    console.log('====================================');
+
+    let profileImg;
 
     bcrypt
         .genSalt(saltRounds)
         .then(salt => {
+            // TODO: convertilo a una función
             if (!/\d/.test(userPwd)) {
                 throw ("password must contain at least one number");
             }
             return bcrypt.hash(userPwd, salt)
         })
-        .then(hashedPassword => User.create({ ...req.body, password: hashedPassword }))
-        .then(createdUser => res.redirect('/'))
+        .then(hashedPassword => User.create({ username, email, password: hashedPassword, profileImg, description }))
+        .then(createdUser => {
+            res.redirect('/')
+        })
         .catch(error => res.render('auth/signup', { errorMessage: error }))
 })
-
-
 
 // Login
 router.get('/iniciar-sesion', (req, res, next) => res.render('auth/login'))
@@ -35,10 +48,14 @@ router.post('/iniciar-sesion', (req, res, next) => {
         .findOne({ email })
         .then(user => {
             if (!user) {
-                res.render('auth/login', { errorMessage: 'Email no registrado en la Base de Datos' })
+                // res.render('auth/login', { errorMessage: 'Email no registrado en la Base de Datos' })
+                res.render('auth/login', { errorMessage: 'Email/contraseña incorrecta' })
+
                 return
             } else if (bcrypt.compareSync(userPwd, user.password) === false) {
-                res.render('auth/login', { errorMessage: 'La contraseña es incorrecta' })
+                // cuidado con los men que mandamos
+                // res.render('auth/login', { errorMessage: 'La contraseña es incorrecta' })
+                res.render('auth/login', { errorMessage: 'Email/contraseña incorrecta' })
                 return
             } else {
                 req.session.currentUser = user
