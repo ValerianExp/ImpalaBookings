@@ -9,7 +9,7 @@ function sendEmail(recipientEmail, subject, text, html) {
         text,
         html,
     };
-    sgMail
+    return sgMail
         .send(msg)
         .then(() => {
             console.log('Email sent to ' + recipientEmail);

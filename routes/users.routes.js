@@ -16,6 +16,8 @@ const { isLoggedIn } = require("./../middleware/session-guard")
 
 const { canEditUser } = require("./../middleware/can-edit-user")
 
+const axiosImp = require("../connect/axios.connect")
+const axiosImpala = new axiosImp();
 
 router.get('/users', isLoggedIn, (req, res, next) => {
     const roles = rolesChecker(req.session.currentUser);
@@ -46,9 +48,21 @@ router.get('/users/:id', isLoggedIn, (req, res, next) => {
     if (!checkMongoID(UserID)) {
         res.render('index', { errorMessage: "Invalid ID" })
     }
+    let user;
     const roles = rolesChecker(req.session.currentUser);
     User.findById(UserID)
-        .then(data => res.render('users/users-details', { data, roles, userMatch }))
+        .populate('favorites', 'hotelId')
+        .then(data => {
+            user = data
+            const auxArr = [];
+            const hotelRequests = data.favorites.map(hotel => axiosImpala.getHotel(hotel.hotelId))
+            return Promise.all(hotelRequests)
+        })
+        .then(values => {
+            console.log(values[0].data);
+            res.render('users/user-details', { user, values, roles, userMatch, fav: values[0].data })
+            // res.render('users/users-details', { data: values, roles, userMatch })
+        })
         .catch(err => console.log(err))
 })
 

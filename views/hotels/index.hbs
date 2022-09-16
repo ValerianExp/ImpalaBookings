@@ -1,11 +1,31 @@
 <h1>List of hotels</h1>
-<p>
+{{!-- <p>
   {{#each hotels}}
-  <a href="/hotels/{{this.hotelId}}">{{this.name}}</a>
-  <br />
-  Emails:
-  {{#each this.emails}}
-<p>{{this}}</p>
-{{/each}}
-{{/each}}
-</p>
+    <a href="/hotels/{{this.hotelId}}">{{this.name}}</a>
+    Emails:
+    {{#each this.emails}}
+      {{this}}
+      <br />
+    {{/each}}
+  {{/each}}
+</p> --}}
+
+<div class="">
+    <div class="row gx-3">
+        {{#each hotels}}
+        {{#if @last}}
+        <div class="col-lg-4 col-md-6 mt-3 card-group mb-3">
+            {{> hotelPartials this}}
+            {{!-- </div> --}}
+            {{!-- {{/if}} --}}
+        </div>
+        {{else}}
+        <div class="col-lg-4 col-md-6 mt-3 card-group">
+            {{> hotelPartials this}}
+            {{!-- </div> --}}
+            {{!-- {{/if}} --}}
+        </div>
+        {{/if}}
+        {{/each}}
+    </div>
+</div>

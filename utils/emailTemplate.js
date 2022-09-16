@@ -1,20 +1,21 @@
 /* 
-    hotelName, 
-    city,
-    country,
-    location,
-    checkIn,
-    checkOut, 
-    priceperDay
-    days,
-    arrivalDate,
-    departureDate,
-    phoneNumber,
-    userName
+	hotelName, 
+	city,
+	country,
+	location,
+	checkIn,
+	checkOut, 
+	priceperDay
+	days,
+	arrivalDate,
+	departureDate,
+	phoneNumber,
+	userName
 */
 
 function getTemplate(template) {
-    return `
+	// console.log(template);
+	return `
     <!DOCTYPE html>
 
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -165,7 +166,7 @@ function getTemplate(template) {
 <td class="pad">
 <div style="font-family: Arial, sans-serif">
 <div class="" style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:20px;color:#339966;"><strong> ${template.userName} your reservation is confirmed</strong></span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:20px;color:#339966;"><strong> ${template.username} your reservation is confirmed</strong></span></p>
 </div>
 </div>
 </td>

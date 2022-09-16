@@ -1,0 +1,25 @@
+<div class="card">
+  {{#if this.images}}
+    <img
+      src="{{this.images.0.url}}"
+      class="card-img-top hotel-image card"
+      alt="Image of {{this.name}}"
+    />
+  {{/if}}
+  <div class="card-body">
+    <h5 class="card-title">{{this.name}}</h5>
+    <p class="card-text">
+      {{#if this.description.short}}
+        {{this.description.short}}
+      {{else}}
+        No description available
+      {{/if}}
+    </p>
+    <a href="/hotels/{{this.hotelId}}" class="btn btn-primary">Details</a>
+
+  </div>
+
+  <div class="card-footer">
+    <small class="text-muted">Phone number: {{this.phoneNumbers}}</small>
+  </div>
+</div>

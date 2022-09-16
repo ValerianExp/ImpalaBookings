@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const AxiosIH = require('../connect/axios.connect');
-const axiosCharacter = new AxiosIH();
+
 
 //Axios
 const AxiosImp = require("../connect/axios.connect");
@@ -17,6 +16,7 @@ const priceRoom = require("../utils/priceRoom");
 
 //LoggedIn
 const { isLoggedIn } = require("../middleware/session-guard");
+const { isLoggedOut } = require("../middleware/session-guard");
 
 //models
 const User = require("../models/User.model");
@@ -27,7 +27,7 @@ router.get("/", (req, res, next) => {
     //     'name[like]': 'inclusive',
     // };
     axiosImpala
-        .getHotels({ 'country[eq]': 'ESP' })
+        .getHotels({})
         .then((response) => {
             const hotelResp = response.data;
             // res.json(hotelResp);
@@ -38,26 +38,95 @@ router.get("/", (req, res, next) => {
         });
 });
 
-router.get("/:id", checkRole("USER", "PA"), (req, res, next) => {
+router.get('/search', (req, res, next) => {
+    const { search } = req.query;
+    axiosImpala.getHotels({ 'name[like]': search })
+        .then((response) => {
+            const hotelResp = response.data;
+            // res.json(hotelResp);
+            res.render("hotels", { hotels: hotelResp.data });
+        })
+        .catch((err) => {
+            next(err);
+        });
+});
+
+router.get("/:id", (req, res, next) => {
+    let verBotones = true;
+    if (!req.session.currentUser) {
+        verBotones = false;
+    }
     const { id } = req.params;
     axiosImpala.getHotel(id)
         .then((hotel) => {
             // console.log(hotel.data);
-            res.render("hotels/details", { hotel: hotel.data });
+            res.render("hotels/details", { hotel: hotel.data, verBotones });
             // res.json(hotel.data);
         })
         .catch((err) => next(err))
     // res.json(axiosImpala.getHotel(id));
 });
 
-router.get('/:id/rooms', isLoggedIn, (req, res, next) => {
+
+
+
+
+router.post('/:id/rooms/:roomId/book', isLoggedIn, (req, res, next) => {
+    const { id } = req.params;
+    const { roomId, price } = req.body;
+    // console.log(req.body);
+    // console.log(id);
+    // console.log(roomId);
+
+
+    console.log('====================================');
+    console.log(req.params.id);
+    console.log('====================================');
+    axiosImpala.getRooms(id)
+        .then((room) => {
+            // console.log(room);
+            // res.json(room);
+            const { name, description, amenities } = room;
+            // const price = priceRoom(amenities);
+            const { email, username } = req.session.currentUser;
+            // const template = getTemplate({ username, name: username, description, price });
+            const template = {
+                hotelName: 'NOMBRE',
+                city: 'CIUDAD',
+                country: 'PAIS',
+                location: 'LOCALIZACION',
+                checkIn: 'CHECKIN',
+                checkOut: 'CHECKOUT',
+                pricePerDay: 99,
+                days: 7,
+                arrivalDate: 'FECHA_LLEGADA',
+                departureDate: 'FECHA_SALIDA',
+                phoneNumber: 'TELEFONO',
+                username: 'NOMBRE_USUARIO',
+            }
+            const tp = getTemplate(template);
+            console.log('====================================');
+            console.log(email);
+            console.log('====================================');
+            sendEmail(email, 'hola', 'hola', tp)
+                .then(() => {
+                    res.redirect(`/hotels/${id}/rooms`);
+                })
+                .catch((err) => next(err));
+            let newReward = req.session.currentUser.hotelrewards - price;
+            User.findByIdAndUpdate(req.session.currentUser._id, { hotelrewards: newReward });
+        })
+        .catch((err) => next(err));
+});
+
+router.get('/:id/rooms', (req, res, next) => {
     //TODO getCharacters() ??
     let canBuy = false;
     if (req.session.currentUser) {
         // const { id } = req.params;
         canBuy = true;
     }
-    axiosCharacter
+    axiosImpala
         .getRooms(req.params.id)
         .then((rooms) => {
             // console.log(room);
@@ -85,37 +154,13 @@ router.get('/:id/rooms', isLoggedIn, (req, res, next) => {
             // });
             // console.log(indexArray);
             // console.log(arrayPrice);
-            res.render('hotels/rooms', { rooms: combined, canBuy });
+            // console.log(rooms);
+            console.log(req.params.id);
+            res.render('hotels/rooms', { rooms: combined, canBuy, hotelId: req.params.id });
         })
         .catch((err) => next(err));
 });
 
-router.post('/:id/rooms/book', isLoggedIn, (req, res, next) => {
-    const { id } = req.params;
-    const { roomId } = req.body;
-    // console.log(req.body);
-    // console.log(id);
-    // console.log(roomId);
-
-
-    axiosCharacter.getRoom(id, roomId)
-        .then((room) => {
-            // console.log(room);
-            // res.json(room);
-            const { name, description, amenities } = room;
-            const price = priceRoom(amenities);
-            const { email, name: userName } = req.session.currentUser;
-            const template = getTemplate(userName, name, description, price);
-            sendEmail('kwf51871@xcoxc.com', 'hola', 'hola', template)
-                .then(() => {
-                    res.redirect(`/hotels/${id}/rooms`);
-                })
-                .catch((err) => next(err));
-            let newReward = req.session.currentUser.hotelrewards - price;
-            User.findByIdAndUpdate(req.session.currentUser._id, { hotelrewards: newReward });
-        })
-        .catch((err) => next(err));
-});
 
 router.post('/:id', (req, res, next) => {
     const { id } = req.params;
@@ -133,7 +178,7 @@ router.post('/:id', (req, res, next) => {
         arrivalDate: 'FECHA_LLEGADA',
         departureDate: 'FECHA_SALIDA',
         phoneNumber: 'TELEFONO',
-        userName: 'NOMBRE_USUARIO',
+        username: 'NOMBRE_USUARIO',
     }
     const emailT = getTemplate(template);
     sendEmail('jzxjgrvcceswijbjpq@nvhrw.com', 'Booking confirmation', 'Your booking has been confirmed', emailT);

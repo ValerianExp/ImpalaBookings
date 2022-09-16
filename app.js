@@ -24,6 +24,9 @@ const projectName = "ImpalaBookings";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+// Partials
+hbs.registerPartials(__dirname + "/views/partials");
+
 // 👇 Start handling routes here
 
 // const index = require("./routes/index.routes");

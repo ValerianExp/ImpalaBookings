@@ -34,7 +34,7 @@ router.get("/", (req, res, next) => {
       //   prevLinkParams = separator(prevLink);
       // }
 
-      res.render("index",
+      res.render("hotels",
         {
           hotels: hotelResp.data,
           // next:

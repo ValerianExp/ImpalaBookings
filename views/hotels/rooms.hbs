@@ -5,22 +5,67 @@
   <p>Description: {{this.description}}</p>
   <p>Max occupancy: {{this.maxOccupancy}}</p>
   <h2>Images</h2>
-  <ul>
-    {{#each this.images}}
-      <li>
-        <img src="{{this.url}}" style="width: 4vw;" />
-      </li>
-    {{/each}}
-  </ul>
+  <div class="car">
+
+    <div
+      id="carouselExampleControls"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-inner">
+        {{#each this.images}}
+          {{#if @first}}
+            <div class="carousel-item active">
+              <img
+                src={{this.url}}
+                class="imageRoom d-block w-100 card"
+                alt="Image of room"
+              />
+            </div>
+          {{else}}
+            <div class="carousel-item">
+              <img
+                src={{this.url}}
+                class="imageRoom d-block w-100 card"
+                alt="Image of room"
+              />
+            </div>
+
+          {{/if}}
+
+        {{/each}}
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
   <h2>Amenities</h2>
   <ul>
     {{#each this.amenities}}
       <li>{{this.formatted}}</li>
     {{/each}}
   </ul>
-  {{!-- <form action="/hotels/rooms/{{this.roomTypeId}}/book" method="POST">
+
+  <form action="/hotels/{{../hotelId}}/rooms/{{this.roomTypeId}}/book" method="POST">
     <input type="text" name="price" value="{{this.price}}" hidden />
     <input type="text" name="name" value="{{this.roomTypeId}}" hidden />
     <button type="submit">Book</button>
-  </form> --}}
+  </form>
 {{/each}}
