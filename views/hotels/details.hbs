@@ -2,7 +2,9 @@
 <h3>{{hotel.name}}</h3>
 <p>{{hotel.description.short}}</p>
 <ul>
-  Phone numbers:
+  <h3>
+    Phone numbers:
+  </h3>
   {{#each hotel.phoneNumbers}}
     <li>{{this}}</li>
   {{/each}}
@@ -15,12 +17,56 @@
   {{/each}}
 </ul>
 
-<ul>
-  Images:
-  {{#each hotel.images}}
-    <li><img src={{this.url}} width="200" /></li>
-  {{/each}}
-</ul>
+<h3>Images</h3>
+<div class="car">
+  <div
+    id="carouselExampleControls"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-inner">
+      {{#each hotel.images}}
+        {{#if @first}}
+          <div class="carousel-item active">
+            <img
+              src={{this.url}}
+              class="imageRoom d-block w-100 card"
+              alt="Image of room"
+            />
+          </div>
+        {{else}}
+          <div class="carousel-item">
+            <img
+              src={{this.url}}
+              class="imageRoom d-block w-100 card"
+              alt="Image of room"
+            />
+          </div>
+
+        {{/if}}
+
+      {{/each}}
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
 
 <ul>
   Amenities:
@@ -65,9 +111,9 @@
 <p>Check-out time: {{hotel.checkOut.to}}</p>
 
 <br />
-{{#if hotel.roomTypes}}
+{{!-- {{#if hotel.roomTypes}}
   {{#each hotel.roomTypes}}
-    {{!-- <h4>RoomTypeId: {{this.roomTypeId}}</h4> --}}
+    <h4>RoomTypeId: {{this.roomTypeId}}</h4>
     <h4>Name: {{this.name}}</h4>
     <p>Description: {{this.description}}</p>
     <p>Max Occupancy: {{this.maxOccupancy}}</p>
@@ -75,42 +121,43 @@
       <p>Amenity: {{this.formatted}}</p>
     {{/each}}
   {{/each}}
+{{/if}} --}}
+
+<form action="/hotels/{{hotel.hotelId}}/rooms" method="get">
+  <button type="submit">Check rooms</button>
+</form>
+
+{{#if verBotones}}
+  <form action="/users/fav" method="post">
+    <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+    <input type="submit" value="Add to favorites" />
+  </form>
+
+  <form action="/users/fav/delete" method="post">
+    <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+    <input type="submit" value="Remove from favorites" />
+  </form>
+
+  {{! Send email }}
+  <form action="/{{hotel.hotelId}}/rooms/book" method="post">
+    <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
+    <input type="hidden" name="hotelName" value="{{hotel.hote.name}}" />
+    <input type="hidden" name="hotelCity" value="{{hotel.address.city}}" />
+    <input
+      type="hidden"
+      name="hotelCountry"
+      value="{{hotel.address.countryName}}"
+    />
+    <input
+      type="hidden"
+      name="location"
+      value="{{hotel.address.line1}}, {{hotel.address.postalCode}} {{hotel.address.city}} {{hotel.address.region}} {{hotel.address.countryName}}"
+    />
+    <input type="hidden" name="checkIn" value="{{hotel.checkIn.from}}" />
+    <input type="hidden" name="checkOut" value="{{hotel.checkOut.to}}" />
+    <input type="submit" value="Book" />
+  </form>
 {{/if}}
-
-<form action="/users/fav" method="post">
-  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
-  <input type="submit" value="Add to favorites" />
-</form>
-
-<form action="/users/fav/delete" method="post">
-  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
-  <input type="submit" value="Remove from favorites" />
-</form>
-
-<form action="" method="post">
-  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
-  <input type="submit" value="Add to blacklist" />
-</form>
-
-{{! Send email }}
-<form action="" method="post">
-  <input type="hidden" name="hotelId" value="{{hotel.hotelId}}" />
-  <input type="hidden" name="hotelName" value="{{hotel.hote.name}}" />
-  <input type="hidden" name="hotelCity" value="{{hotel.address.city}}" />
-  <input
-    type="hidden"
-    name="hotelCountry"
-    value="{{hotel.address.countryName}}"
-  />
-  <input
-    type="hidden"
-    name="location"
-    value="{{hotel.address.line1}}, {{hotel.address.postalCode}} {{hotel.address.city}} {{hotel.address.region}} {{hotel.address.countryName}}"
-  />
-  <input type="hidden" name="checkIn" value="{{hotel.checkIn.from}}" />
-  <input type="hidden" name="checkOut" value="{{hotel.checkOut.to}}" />
-  <input type="submit" value="Send email" />
-</form>
 
 {{! Mapas }}
 <div id="map" style="width: 100%; height: 400px"></div>
